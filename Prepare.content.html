@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+    <h1>Is your site running slow ? Check Custom HTML modules.</h1>
+
+    <div class="itemImageBlock"><img src="/magazine/media/k2/items/cache/48ed12281ae1f6453d2d5ec95b17e082_L.jpg" alt="Is your site running slow ? Check Custom HTML modules." style="width:747px; height:auto;"></div>
+
+    <div class="itemBody">
+        <div class="itemIntroText">
+            <p>One of the most popular module types you will find amongst the pages of most Joomla! websites is the plain old default Custom HTML module. The Custom HTML modules is a very useful feature; with it, you can insert virtually any code you like, ranging from text or images to social media share buttons.</p>
+        </div>
+
+        <div class="itemFullText">
+            <p>As you have probably noticed, the Custom HTML module doesn't have many additional options. You can set a suffix and a background image, configure its cache, and also enable or disable <strong>Prepare Content</strong> with the Joomla! content plugins.</p>
+
+            <p>However, as discovered by Ronni Christiansen from <a href="http://redcomponent.com" rel="nofollow" target="_blank">redcomponent.com</a>, the Prepare Content option may break the Joomla! cache and browser cache and generally slow down application rendering time. See here for more details: <a href="http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&amp;tracker_item_id=30288">Joomla! 2.5.x Bug Tracker</a></p>
+
+            <p>All of your instances of the Custom HTML module probably uses this option because since version 2.5 of Joomla!, this feature has been enabled by default.</p>
+
+            <p>This has possibly had the following consequences for your Joomla site:</p>
+
+            <ul>
+                <li>Joomla! cache not working with the Custom HTML module;</li>
+
+                <li>browsers being unable to cache this module’s content so that module content must be loaded with each user visit to the site; and,</li>
+
+                <li>site rendering time being much higher.</li>
+            </ul>
+
+            <p>The easiest way to correct this problem is to run a SQL query to disable this option in all modules. To apply this solution, you need access to your database (via PHPMyAdmin or some other database administration tool) and run the following SQL statement:</p>
+            <pre>
+update DBPREFIX_modules set params = replace(params,'prepare_content":"1', 'prepare_content":"0')
+</pre>
+
+            <p>Of course, DBPREFIX must be replaced with your database prefix which you can verify by browsing the database or by checking the value in the <strong>root/configuration.php</strong> file; just find the line similar to this one:</p>
+            <pre>
+public $dbprefix = 'rv1zj_';
+</pre>
+
+            <p>&nbsp;</p>
+
+            <p>In this example the database prefix is '<em>rv1zj_</em>'.</p>
+
+            <p>Another approach to fix this issue is to manually disable the Prepare Content option via your Joomla! administrator panel. In this case, you will need go to Module Manager and filter the modules by the type Custom HTML. Then, in every module‘s parameters, set its <strong>Prepare Content</strong> option to '<strong>No</strong>' and save the settings.</p>
+
+            <p><img src="/magazine/images/CustomHTMLSettings.png" width="568" height="153" alt="CustomHTMLSettings"></p>
+
+            <p>Remember, though, that if your module is loading tags or scripts inside your Custom HTML module, then your website needs Prepare Content enabled.</p>
+
+            <p>Please also remember that when making changes directly to the database we strongly recommend you first create a backup of your database or of your entire website. <em>Better safe than sorry!</em></p>
+        </div>
+
+        <div class="itemBottom"></div>
+    </div>
+</body>
+</html>
